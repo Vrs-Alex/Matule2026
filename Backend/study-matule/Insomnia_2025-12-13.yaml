@@ -1,0 +1,213 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Matule App
+meta:
+  id: wrk_e2fa5795095245d1916f98a30fd9cf2c
+  created: 1765615725388
+  modified: 1765632640536
+  description: ""
+collection:
+  - url: http://localhost:8080/api/auth/login
+    name: SignIn
+    meta:
+      id: req_9adc3150afc34492bed416d58e5944de
+      created: 1765615725392
+      modified: 1765633636770
+      isPrivate: false
+      description: ""
+      sortKey: -1765615725392
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "test0508@gmail.com",
+        	"password": "123456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/register
+    name: SignUp
+    meta:
+      id: req_80874473186147a7af080a2bfcb056d4
+      created: 1765617784865
+      modified: 1765632689663
+      isPrivate: false
+      description: ""
+      sortKey: -1765617784865
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "test0508@gmail.com",
+        	"password": "123456",
+        	"firstName": "Alex",
+        	"lastName": "Vrs",
+        	"patronymic": "A",
+        	"birthday": "1999-12-05",
+        	"gender": "man",
+        	"phoneNum": "89002002030"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/refresh-token
+    name: RefreshToken
+    meta:
+      id: req_53b73d072dac44feb7f191fb0d2d6126
+      created: 1765624812693
+      modified: 1765633583701
+      isPrivate: false
+      description: ""
+      sortKey: -1765624812693
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJlNDk2MWNhYy02MDRkLTRkZjEtODE5Ny05YmU3ZmZkNzRlMjkiLCJzdWIiOiIxIiwidG9rZW5UeXBlIjoicmVmcmVzaCIsImlzUmVtZW1iZXJNZSI6Im51bGwiLCJpYXQiOjE3NjU2MzM1NDQsImV4cCI6MTc2ODIyNTU0NH0.PSnJAAv2-FD7ucXIcaO847rsbYGdjEawz9oNf54ns4mN3u2ZotoQ2I4szCO5TX8a5Lm0XhuFPKxMslwO5TZ5lQ"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/register/verify
+    name: Verify SignUp
+    meta:
+      id: req_81f0c1d5afd24ec89e6d7d6bbb013b97
+      created: 1765628412157
+      modified: 1765632707708
+      isPrivate: false
+      description: ""
+      sortKey: -1765628412157
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"phoneNumber": "89002002030",
+        	"code": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/logout
+    name: Logout
+    meta:
+      id: req_81cbc8a4779440e3aedce81778f1b3b0
+      created: 1765630694179
+      modified: 1765633794104
+      isPrivate: false
+      description: ""
+      sortKey: -1765630694179
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJlNDk2MWNhYy02MDRkLTRkZjEtODE5Ny05YmU3ZmZkNzRlMjkiLCJzdWIiOiIxIiwidG9rZW5UeXBlIjoicmVmcmVzaCIsImlzUmVtZW1iZXJNZSI6Im51bGwiLCJpYXQiOjE3NjU2MzM1NDQsImV4cCI6MTc2ODIyNTU0NH0.PSnJAAv2-FD7ucXIcaO847rsbYGdjEawz9oNf54ns4mN3u2ZotoQ2I4szCO5TX8a5Lm0XhuFPKxMslwO5TZ5lQ"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJhZjI0NmY3Zi04M2I4LTQzYzctOWI2Mi05YTJjYzRhZTg4OGMiLCJzdWIiOiIxIiwidG9rZW5UeXBlIjoiYWNjZXNzIiwiaXNSZW1lbWJlck1lIjoibnVsbCIsImlhdCI6MTc2NTYzMzYxMiwiZXhwIjoxNzY1NjMzOTEyfQ.28k6wyXkAN3oHxyM49kc-CCfeSvMWRJaL3LlsTN3-PGl9fr4-1xdZeYOk2g_6lYJmhivJu1qyAY1lifpVPNfFg
+      prefix: Bearer
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/profile/get
+    name: Profile (Protected endpoint)
+    meta:
+      id: req_4c52f780179b4aec8ff1e85e052ddb33
+      created: 1765632910972
+      modified: 1765632940808
+      isPrivate: false
+      description: ""
+      sortKey: -1765632910972
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_d551440e01d7c7f3863d8d0bcbf94062330d5de1
+    created: 1765615725390
+    modified: 1765615725390
+environments:
+  name: Base Environment
+  meta:
+    id: env_d551440e01d7c7f3863d8d0bcbf94062330d5de1
+    created: 1765615725389
+    modified: 1765615725389
+    isPrivate: false

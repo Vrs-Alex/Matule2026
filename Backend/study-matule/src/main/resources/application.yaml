@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: study-matule
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  threads:
+    virtual:
+      enabled: true
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:h2:file:./db/study-data;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+
+jwt:
+  secret: cnR3aHJ3aGhoaHJod3J0aHRyaHJ5aHJocnRyaHJ0aHJ3aHJ0aHRyd2hyd2hyaHJqanJ0anRleWp0anR5anRlag2=
+  token:
+    expiry-refresh-token-ms: 2592000000
+    expiry-access-token-ms: 30000
+  prefix: "Bearer "
+  cookie:
+    access-token-name: accessToken
+    refresh-token-name: refreshToken
