@@ -14,3 +14,7 @@ val InputIcon = Color(0xFFBFC7D1)
 val Placeholder = Color(0xFF98989A)
 val Description = Color(0xFF8787A1)
 val CartStroke = Color(0xFFF2F2F2)
+
+val Caption = Color(0xFF939396)
+val DefaultIcon = Color(0xFFB8C1CC)
+val Icons = Color(0xFFB8C1CC)

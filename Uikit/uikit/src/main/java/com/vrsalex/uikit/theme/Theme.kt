@@ -27,9 +27,12 @@ data class AppColor(
     val success: Color,
     val inputBg: Color,
     val inputStroke: Color,
+    val inputIcon: Color,
     val placeholder: Color,
     val description: Color,
-    val cartStroke: Color
+    val cartStroke: Color,
+    val caption: Color,
+    val icons: Color
 )
 
 
@@ -79,10 +82,13 @@ val LocalAppColorComposition = staticCompositionLocalOf {
         error = Color.Unspecified,
         success = Color.Unspecified,
         inputBg = Color.Unspecified,
+        inputIcon = Color.Unspecified,
         inputStroke = Color.Unspecified,
         placeholder = Color.Unspecified,
         description = Color.Unspecified,
-        cartStroke = Color.Unspecified
+        cartStroke = Color.Unspecified,
+        caption = Color.Unspecified,
+        icons = Color.Unspecified
     )
 }
 
@@ -140,10 +146,13 @@ fun AppMatuleTheme(
         error = Error,
         success = Success,
         inputBg = InputBg,
+        inputIcon = InputIcon,
         inputStroke = InputStroke,
         placeholder = Placeholder,
         description = Description,
-        cartStroke = CartStroke
+        cartStroke = CartStroke,
+        caption = Caption,
+        icons = Icons
     )
     
     val types = AppType(
@@ -179,12 +188,36 @@ fun AppMatuleTheme(
         space64 = 64.dp
     )
 
+    val view = LocalView.current
+    if (!view.isInEditMode){
+        SideEffect {
+            val window = (view.context as? Activity)?.window
+            if (window != null) {
+                val controller = WindowCompat.getInsetsController(window, view)
+                controller.isAppearanceLightStatusBars = true // Заглушка
+                controller.isAppearanceLightNavigationBars = true // Заглушка
+            }
+        }
+    }
+
     CompositionLocalProvider(
         LocalAppColorComposition provides colors,
         LocalAppTypeComposition provides types,
         LocalAppSpaceComposition provides spaces,
         content = content
     )
+}
+
+
+object AppTheme {
+    val color @Composable get()
+        = LocalAppColorComposition.current
+
+    val type @Composable get()
+    = LocalAppTypeComposition.current
+
+    val space @Composable get()
+    = LocalAppSpaceComposition.current
 }
 
 
