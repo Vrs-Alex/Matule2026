@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MatuleApi 2026"
 include(":app")
- 
+include(":network")
