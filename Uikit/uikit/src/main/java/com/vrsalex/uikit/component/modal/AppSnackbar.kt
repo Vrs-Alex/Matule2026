@@ -32,10 +32,13 @@ import com.vrsalex.uikit.theme.AppTheme
 fun AppSnackbar(
     title: String,
     onClose: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = Color.White,
 ) {
 
-    Box(modifier = modifier.fillMaxWidth()) {
+    Box(
+        modifier = modifier.fillMaxWidth()
+    ) {
         Surface(
             modifier = Modifier
                 .height(120.dp)
@@ -46,7 +49,7 @@ fun AppSnackbar(
                     ambientColor = Color.White.copy(alpha = 0.5f),
                     spotColor = Color.White.copy(alpha = 0.5f)
                 ),
-            color = AppTheme.color.white,
+            color = color,
             shape = RoundedCornerShape(8.dp)
         ) {
             Box(Modifier.fillMaxSize()) {
