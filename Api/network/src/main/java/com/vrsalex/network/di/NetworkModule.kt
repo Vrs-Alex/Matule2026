@@ -26,7 +26,7 @@ annotation class AuthClient
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
-    private const val BASE_URL = "http://192.168.0.193/api/"
+    private const val BASE_URL = "http://192.168.0.189:8080/api/"
 
     @Provides
     @Singleton
@@ -86,5 +86,6 @@ internal object NetworkModule {
         retrofitBuilder: Retrofit.Builder,
         @AuthClient okHttpClient: OkHttpClient
     ): AuthApi = retrofitBuilder.client(okHttpClient).build().create(AuthApi::class.java)
+
 
 }

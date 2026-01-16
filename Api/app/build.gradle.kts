@@ -1,7 +1,13 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -34,7 +40,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlin {
-        jvmToolchain { 17 }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
     buildFeatures {
@@ -44,7 +52,24 @@ android {
 
 dependencies {
 
-    im
+    implementation(project(":network"))
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp)
+
+    // Compose Navigation
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
