@@ -16,7 +16,7 @@ import javax.inject.Singleton
 import kotlin.reflect.typeOf
 
 @Singleton
-class AuthAuthenticator @Inject constructor(
+internal class AuthAuthenticator @Inject constructor(
     private val tokenProvider: TokenProvider,
     private val authObserver: AuthObserver,
     private val authService: AuthService

@@ -13,18 +13,18 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface AuthApi {
+internal interface AuthApi {
 
-    @POST("login")
+    @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @POST("signup")
+    @POST("auth/signup")
     suspend fun signup(@Body request: SignUpRequest): Response<SignUpResponse>
 
-    @GET("logout")
+    @GET("auth/logout")
     suspend fun logout(): Response<LogoutResponse>
 
-    @POST("update_tokens")
+    @POST("auth/update_tokens")
     suspend fun updateTokens(@Header("Authorization") refresh: String): Response<UpdateTokensResponse>
 
 }

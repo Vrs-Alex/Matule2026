@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TokenInterceptor @Inject constructor(
+internal class TokenInterceptor @Inject constructor(
     private val tokenProvider: TokenProvider
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

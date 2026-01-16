@@ -24,9 +24,9 @@ annotation class AuthClient
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal object NetworkModule {
 
-    private const val BASE_URL = "http://your.base.url/api/"
+    private const val BASE_URL = "http://192.168.0.193/api/"
 
     @Provides
     @Singleton

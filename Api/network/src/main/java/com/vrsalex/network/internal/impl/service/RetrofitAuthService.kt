@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class RetrofitAuthService @Inject constructor(
+internal class RetrofitAuthService @Inject constructor(
     private val api: AuthApi,
     private val json: Json
 ) : AuthService {
