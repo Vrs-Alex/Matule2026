@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.vrsalex.matuleapp.presentation.feature.auth.login.LoginScreen
 import com.vrsalex.matuleapp.presentation.navigation.AuthGraph
 import com.vrsalex.matuleapp.presentation.navigation.LogInAndSignUpDestination
 
@@ -12,7 +13,10 @@ fun NavGraphBuilder.authGraph(navController: NavController){
         startDestination = LogInAndSignUpDestination
     ){
         composable<LogInAndSignUpDestination> {
-
+            LoginScreen(
+                onNavigateToSignUp = {},
+                onNavigateToCreatePinCode = {}
+            )
         }
 
     }

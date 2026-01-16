@@ -1,5 +1,6 @@
 package com.vrsalex.matuleapp.presentation.feature.auth.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
@@ -39,14 +40,12 @@ class LoginViewModel @Inject constructor(
                             _state.update { it.copy(isLoading = false) }
                             _channel.send(LoginContract.Effect.SignIn)
                         }
-                        AuthResult.NetworkError -> {
+                        AuthResult.Error.NetworkError -> {
                             _state.update { it.copy(isLoading = false) }
-                            _channel.send(LoginContract.Effect.ShowError("Проблемы с интернетом"))
-                            snackbarController.showMessage("Проблемы с интернетом")
+                            snackbarController.showMessage("Нет интернета")
                         }
-                        AuthResult.UserNotFound, AuthResult.WrongPassword -> {
+                        else  -> {
                             _state.update { it.copy(isLoading = false) }
-                            _channel.send(LoginContract.Effect.ShowError("Неверные данные"))
                         }
                     }
                 }

@@ -52,6 +52,7 @@ android {
 dependencies {
 
     implementation(files("lib/uikit-release.aar"))
+    implementation(files("lib/network-release.aar"))
 
 
     implementation(libs.coil.compose)

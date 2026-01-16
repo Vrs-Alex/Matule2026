@@ -20,6 +20,5 @@ object LoginContract {
     sealed interface Effect {
         data object SingUp: Effect
         data object SignIn: Effect
-        data class ShowError(val message: String) : Effect
     }
 }

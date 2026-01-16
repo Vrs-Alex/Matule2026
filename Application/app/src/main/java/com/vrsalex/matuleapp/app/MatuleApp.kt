@@ -1,12 +1,17 @@
 package com.vrsalex.matuleapp.app
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -29,8 +34,6 @@ import com.vrsalex.uikit.theme.AppTheme
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-@Inject
-lateinit var snackbarController: SnackbarController
 
 @Composable
 fun MatuleApp() {
@@ -81,6 +84,7 @@ fun MatuleApp() {
             snackbarHost = {
                 SnackbarHost(
                     hostState = snackBarHostState,
+                    modifier = Modifier.padding(30.dp)
                 ){ data ->
                     AppSnackbar(
                         title = data.visuals.message,

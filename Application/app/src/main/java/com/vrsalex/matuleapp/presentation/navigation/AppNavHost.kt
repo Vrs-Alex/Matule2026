@@ -2,6 +2,7 @@ package com.vrsalex.matuleapp.presentation.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,7 +27,7 @@ fun AppNavHost(
         NavHost(
             navController = navHost,
             startDestination = startedDestination!!,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().statusBarsPadding()
         ) {
             authGraph(navHost)
         }
