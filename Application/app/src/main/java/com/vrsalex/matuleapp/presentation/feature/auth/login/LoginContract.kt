@@ -4,7 +4,9 @@ object LoginContract {
 
     data class State(
         val email: String = "",
+        val emailError: String? = null,
         val password: String = "",
+        val passwordError: String? = null,
         val isLoading: Boolean = false
     ){
         val isButtonActive = email.isNotEmpty() && password.isNotEmpty() && !isLoading

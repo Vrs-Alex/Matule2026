@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -72,6 +73,7 @@ private fun LoginContent(
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
+                Spacer(Modifier.width(16.dp))
                 Text(
                     text = "Добро пожаловать!",
                     style = AppTheme.type.title1ExtraBold
@@ -92,6 +94,7 @@ private fun LoginContent(
                 value = state.email,
                 onValueChange = { event(LoginContract.Event.OnEmailChanged(it)) },
                 placeholder = "example@mail.com",
+                error = state.emailError,
                 label = "Вход по E-mail"
             )
             AppTextInput(
@@ -99,6 +102,7 @@ private fun LoginContent(
                 onValueChange = { event(LoginContract.Event.OnPasswordChanged(it)) },
                 placeholder = "",
                 label = "Пароль",
+                error = state.passwordError,
                 isPasswordField = true
             )
             AppButton(

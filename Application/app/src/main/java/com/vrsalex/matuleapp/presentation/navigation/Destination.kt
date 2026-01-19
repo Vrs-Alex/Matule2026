@@ -2,6 +2,7 @@ package com.vrsalex.matuleapp.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
+
 @Serializable
 data object AuthGraph
 

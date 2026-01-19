@@ -1,6 +1,7 @@
 package com.vrsalex.matuleapp.presentation.feature.auth.login
 
 import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
@@ -29,26 +30,15 @@ class LoginViewModel @Inject constructor(
 
     fun onEvent(e: LoginContract.Event){
         when(e) {
-            is LoginContract.Event.OnEmailChanged -> _state.update { it.copy(email = e.email) }
-            is LoginContract.Event.OnPasswordChanged -> _state.update { it.copy(password = e.password) }
+            is LoginContract.Event.OnEmailChanged -> _state.update { it.copy(email = e.email, emailError = null) }
+            is LoginContract.Event.OnPasswordChanged -> _state.update { it.copy(password = e.password, passwordError = null) }
             LoginContract.Event.OnSignInClick -> {
-                _state.update { it.copy(isLoading = true) }
-                viewModelScope.launch {
-                    val res = authRepository.signIn(_state.value.email, _state.value.password)
-                    when(res){
-                        is AuthResult.Success<Unit> -> {
-                            _state.update { it.copy(isLoading = false) }
-                            _channel.send(LoginContract.Effect.SignIn)
-                        }
-                        AuthResult.Error.NetworkError -> {
-                            _state.update { it.copy(isLoading = false) }
-                            snackbarController.showMessage("Нет интернета")
-                        }
-                        else  -> {
-                            _state.update { it.copy(isLoading = false) }
-                        }
-                    }
+                val error = com.vrsalex.matuleapp.domain.validation.EmailValidation.validateEmail(_state.value.email)
+                if (error != null) {
+                    _state.update { it.copy(emailError = error) }
+                    return
                 }
+                signIn()
             }
             LoginContract.Event.SingUpClick -> {
                 viewModelScope.launch {
@@ -58,5 +48,27 @@ class LoginViewModel @Inject constructor(
 
         }
     }
+
+    private fun signIn(){
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            val res = authRepository.signIn(_state.value.email, _state.value.password)
+            when(res){
+                is AuthResult.Success<Unit> -> {
+                    _state.update { it.copy(isLoading = false) }
+                    _channel.send(LoginContract.Effect.SignIn)
+                }
+                AuthResult.Error.NetworkError -> {
+                    _state.update { it.copy(isLoading = false) }
+                    snackbarController.showMessage("Нет интернета")
+                }
+                else  -> {
+                    _state.update { it.copy(isLoading = false) }
+                }
+            }
+        }
+    }
+
+
 
 }
