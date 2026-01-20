@@ -28,7 +28,9 @@ internal class RetrofitAuthService @Inject constructor(
     }
 
     override suspend fun signUp(request: SignUpRequest): NetworkResult<SignUpResponse> {
-        return safeApiCall { api.signup(request) }
+        return safeApiCall {
+            api.signup(request)
+        }
     }
 
     override suspend fun logout(): NetworkResult<LogoutResponse> {
