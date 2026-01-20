@@ -1,6 +1,5 @@
-package com.vrsalex.network.api.dto.request
+package com.vrsalex.network.api.dto.request.auth
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

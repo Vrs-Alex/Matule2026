@@ -2,6 +2,11 @@ package com.vrsalex.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.vrsalex.network.internal.api.AuthApi
+import com.vrsalex.network.internal.api.BannerApi
+import com.vrsalex.network.internal.api.CartApi
+import com.vrsalex.network.internal.api.CategoryApi
+import com.vrsalex.network.internal.api.ProductApi
+import com.vrsalex.network.internal.api.ProfileApi
 import com.vrsalex.network.internal.impl.AuthAuthenticator
 import com.vrsalex.network.internal.impl.TokenInterceptor
 import dagger.Module
@@ -87,5 +92,24 @@ internal object NetworkModule {
         @AuthClient okHttpClient: OkHttpClient
     ): AuthApi = retrofitBuilder.client(okHttpClient).build().create(AuthApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideBannerApi(retrofit: Retrofit) = retrofit.create(BannerApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCartApi(retrofit: Retrofit) = retrofit.create(CartApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCategoryApi(retrofit: Retrofit) = retrofit.create(CategoryApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideProductApi(retrofit: Retrofit) = retrofit.create(ProductApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(retrofit: Retrofit) = retrofit.create(ProfileApi::class.java)
 
 }

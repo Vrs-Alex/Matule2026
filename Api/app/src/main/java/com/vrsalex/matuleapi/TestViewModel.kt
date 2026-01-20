@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.network.api.dto.request.LoginRequest
-import com.vrsalex.network.api.service.AuthService
+import com.vrsalex.network.api.service.AuthRemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TestViewModel @Inject constructor(
-    authService: AuthService
+    authService: AuthRemoteDataSource
 ): ViewModel() {
 
     private val _test = MutableStateFlow("")

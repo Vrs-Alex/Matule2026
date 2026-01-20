@@ -1,9 +1,9 @@
-package com.vrsalex.network.api.dto.request
+package com.vrsalex.network.api.dto.request.auth
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginRequest(
+data class SignInRequest(
     val email: String,
     val password: String
 )

@@ -3,7 +3,8 @@ package com.vrsalex.network.internal.impl
 import com.vrsalex.network.api.NetworkResult
 import com.vrsalex.network.api.common.AuthObserver
 import com.vrsalex.network.api.common.TokenProvider
-import com.vrsalex.network.api.service.AuthService
+import com.vrsalex.network.api.dto.request.auth.RefreshTokenRequest
+import com.vrsalex.network.api.service.AuthRemoteDataSource
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -13,13 +14,12 @@ import okhttp3.Response
 import okhttp3.Route
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.reflect.typeOf
 
 @Singleton
 internal class AuthAuthenticator @Inject constructor(
     private val tokenProvider: TokenProvider,
     private val authObserver: AuthObserver,
-    private val authService: AuthService
+    private val authService: AuthRemoteDataSource
 ) : Authenticator {
 
     private val mutex = Mutex()
@@ -44,7 +44,7 @@ internal class AuthAuthenticator @Inject constructor(
                     return@withLock null
                 }
 
-                when (val result = authService.updateTokens(refreshToken)) {
+                when (val result = authService.updateTokens(RefreshTokenRequest(refreshToken))) {
                     is NetworkResult.Success -> {
                         val newTokens = result.data
                         tokenProvider.saveNewTokens(newTokens.accessToken, newTokens.refreshToken)
