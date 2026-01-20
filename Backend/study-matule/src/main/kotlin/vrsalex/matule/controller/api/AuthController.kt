@@ -39,9 +39,9 @@ class AuthController(
     @PostMapping(ServerEndpoints.API.AUTH_USER_REGISTER_ENDPOINT)
     fun signUp(
         @RequestBody request: SignUpRequest
-    ): ResponseEntity<Void> {
-        authFacade.signUp(SingUpControllerMapper.toCommand(request))
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build()
+    ): ResponseEntity<AuthResponse> {
+        val tokens = authFacade.signUp(SingUpControllerMapper.toCommand(request))
+        return ResponseEntity.ok(SignInControllerMapper.toResponse(tokens))
     }
 
     @PostMapping(ServerEndpoints.API.AUTH_USER_REGISTER_VERIFY_ENDPOINT)

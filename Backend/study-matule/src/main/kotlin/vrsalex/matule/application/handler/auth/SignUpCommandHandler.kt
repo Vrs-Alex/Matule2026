@@ -7,6 +7,7 @@ import vrsalex.matule.application.command.auth.SignUpCommand
 import vrsalex.matule.application.exception.exc.InvalidCredentialsException
 import vrsalex.matule.application.exception.exc.UserExistException
 import vrsalex.matule.application.exception.exc.UserNotExistException
+import vrsalex.matule.application.result.auth.AuthResult
 import vrsalex.matule.domain.model.User
 import vrsalex.matule.domain.port.cache.ShortStorageTokens
 import vrsalex.matule.domain.port.cache.ShortStorageUser
@@ -23,7 +24,7 @@ class SignUpCommandHandler(
     private val shortStorageUser: ShortStorageUser
 ) {
 
-    operator fun invoke(command: SignUpCommand) {
+    operator fun invoke(command: SignUpCommand): AuthResult {
         val userExisting = userRepository.findByEmail(command.email)
         if (userExisting != null) throw UserExistException("Пользователь с почтой ${command.email} уже существует")
         if (!validateEmail(command.email)) throw InvalidCredentialsException("Неверная почта")
@@ -54,9 +55,7 @@ class SignUpCommandHandler(
         )
         saveRefreshTokenCommandHandler(saveRefreshTokenCommand)
 
-        // SMS sending needs to be added to production
-        shortStorageUser.put(command.phoneNumber, user)
-        shortStorageTokens.put(command.phoneNumber,tokens)
+        return tokens
     }
 
     private fun validatePhoneNumber(phoneNumber: String): Boolean {
