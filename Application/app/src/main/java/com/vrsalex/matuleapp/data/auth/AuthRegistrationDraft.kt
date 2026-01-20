@@ -1,6 +1,6 @@
 package com.vrsalex.matuleapp.data.auth
 
-import com.vrsalex.matuleapp.domain.auth.SignUpData
+import com.vrsalex.matuleapp.domain.auth.model.SignUpData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

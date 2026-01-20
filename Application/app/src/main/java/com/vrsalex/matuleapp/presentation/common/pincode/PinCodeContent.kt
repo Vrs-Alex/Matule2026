@@ -1,10 +1,13 @@
 package com.vrsalex.matuleapp.presentation.common.pincode
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +26,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.vrsalex.matuleapp.R
@@ -145,10 +151,12 @@ fun PinKey(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val interactionSource =  remember { MutableInteractionSource()  }
-    val isPressed by interactionSource.collectIsPressedAsState()
+    var isPressed by remember { mutableStateOf(false) }
 
-    val backgroundColor = if (isPressed) AppTheme.color.accent else AppTheme.color.inputBg
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF166FF1) else Color(0xFFF7F7F9),
+        label = "backgroundColor"
+    )
     val contentColor = if (isPressed) Color.White else Color.Black
 
     Box(
@@ -156,11 +164,22 @@ fun PinKey(
             .size(80.dp)
             .clip(CircleShape)
             .background(backgroundColor)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = { onClick(value) }
-            ),
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        isPressed = true // Меняем цвет сразу
+                        try {
+                            awaitRelease() // Ждем, пока отпустишь
+                        } finally {
+                            isPressed = false // Возвращаем обратно
+                        }
+                    },
+                    onTap = {
+                        onClick(value)
+                        println("Click!")
+                    }
+                )
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(

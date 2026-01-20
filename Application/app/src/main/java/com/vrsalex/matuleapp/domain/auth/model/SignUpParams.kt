@@ -1,4 +1,4 @@
-package com.vrsalex.matuleapp.domain.auth
+package com.vrsalex.matuleapp.domain.auth.model
 
 data class SignUpParams(
     val email: String,

@@ -3,8 +3,14 @@ package com.vrsalex.matuleapp.presentation.feature.auth.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.data.auth.AuthRegistrationDraft
+import com.vrsalex.matuleapp.domain.auth.AuthRepository
+import com.vrsalex.matuleapp.domain.auth.AuthResult
+import com.vrsalex.matuleapp.domain.auth.model.SignUpData
+import com.vrsalex.matuleapp.domain.auth.model.SignUpParams
 import com.vrsalex.matuleapp.domain.validation.PasswordValidation
+import com.vrsalex.matuleapp.presentation.common.snackbar.SnackbarController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreatePasswordViewModel @Inject constructor(
-    private val authRegistrationDraft: AuthRegistrationDraft
+    private val authRegistrationDraft: AuthRegistrationDraft,
+    private val authRepository: AuthRepository,
+    private val snackbarController: SnackbarController
 ): ViewModel() {
 
     private val _state = MutableStateFlow(CreatePasswordContract.State())
@@ -34,9 +42,26 @@ class CreatePasswordViewModel @Inject constructor(
             CreatePasswordContract.Event.OnNextClick -> {
                 if (_state.value.isButtonActive) {
                     viewModelScope.launch {
-                        val s = _state.value
-                        authRegistrationDraft.update { it.copy(password = s.password) }
-                        _channel.send(CreatePasswordContract.Effect.OnNext)
+                        authRegistrationDraft.update { it.copy(password = _state.value.password) }
+                        val d = authRegistrationDraft.draft.value
+
+                        val params = SignUpParams(
+                            email = d.email,
+                            password = d.password,
+                            firstName = d.firstName,
+                            lastName = d.lastName,
+                            patronymic = d.patronymic,
+                            birthday = d.birthday,
+                            gender = d.gender
+                        )
+
+                        val signUpRes = authRepository.signUp(params)
+
+                        if (signUpRes is AuthResult.Success) {
+                            _channel.send(CreatePasswordContract.Effect.OnNext)
+                        } else {
+                            snackbarController.showMessage("Ошибка регистрации")
+                        }
                     }
                 }
             }

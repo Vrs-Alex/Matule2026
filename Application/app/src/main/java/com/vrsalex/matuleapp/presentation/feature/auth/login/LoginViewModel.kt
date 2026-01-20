@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
 import com.vrsalex.matuleapp.domain.auth.AuthResult
+import com.vrsalex.matuleapp.domain.auth.model.AuthTokens
 import com.vrsalex.matuleapp.presentation.common.snackbar.SnackbarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -54,7 +55,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             val res = authRepository.signIn(_state.value.email, _state.value.password)
             when(res){
-                is AuthResult.Success<Unit> -> {
+                is AuthResult.Success<AuthTokens> -> {
                     _state.update { it.copy(isLoading = false) }
                     _channel.send(LoginContract.Effect.SignIn)
                 }
