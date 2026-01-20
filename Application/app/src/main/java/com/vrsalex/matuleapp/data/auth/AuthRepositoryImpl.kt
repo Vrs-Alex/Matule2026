@@ -1,66 +1,48 @@
 package com.vrsalex.matuleapp.data.auth
 
-import com.vrsalex.matuleapp.data.datastore.DataStoreManager
+import com.vrsalex.matuleapp.data.local.datastore.DataStoreManager
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
 import com.vrsalex.matuleapp.domain.auth.AuthResult
 import com.vrsalex.matuleapp.domain.auth.model.AuthTokens
 import com.vrsalex.matuleapp.domain.auth.model.SignUpParams
 import com.vrsalex.network.api.NetworkResult
-import com.vrsalex.network.api.dto.request.LoginRequest
-import com.vrsalex.network.api.dto.request.SignUpRequest
-import com.vrsalex.network.api.dto.response.LoginResponse
-import com.vrsalex.network.api.dto.response.SignUpResponse
-import com.vrsalex.network.api.service.AuthService
+import com.vrsalex.network.api.dto.request.auth.SignInRequest
+import com.vrsalex.network.api.dto.response.AuthResponse
+import com.vrsalex.network.api.service.AuthRemoteDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
-    private val authService: AuthService,
+    private val authRemoteDataSource: AuthRemoteDataSource,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository {
+
     override suspend fun signIn(
         email: String,
         password: String
     ): AuthResult<AuthTokens> {
-        val res = when(val response = authService.logIn(LoginRequest(email, password))) {
-            is NetworkResult.Success<LoginResponse> -> AuthResult.Success(
-                AuthTokens(
-                    accessToken = response.data.accessToken,
-                    refreshToken = response.data.refreshToken
-                )
-            )
+        return when(val response = authRemoteDataSource.logIn(SignInRequest(email, password))) {
+            is NetworkResult.Success<AuthResponse> -> {
+                dataStoreManager.saveTokens(response.data.accessToken, response.data.refreshToken)
+                AuthResult.Success(response.data.toDomain())
+            }
             NetworkResult.Error.NoInternet -> AuthResult.Error.NetworkError
             else -> AuthResult.Error.UnknownError
         }
-        return res
     }
 
     override suspend fun signUp(param: SignUpParams): AuthResult<AuthTokens> {
-        val response = authService.signUp(
-            SignUpRequest(
-                email = param.email,
-                password = param.password,
-                firstName = param.firstName,
-                lastName = param.lastName,
-                patronymic = param.patronymic,
-                birthday = param.birthday,
-                gender = param.gender
-            )
-        )
-        val res = when(response) {
-            is NetworkResult.Success<SignUpResponse> -> AuthResult.Success(
-                AuthTokens(
-                    accessToken = response.data.accessToken,
-                    refreshToken = response.data.refreshToken
-                )
-            )
+        return when(val response = authRemoteDataSource.signUp(param.toRequest())) {
+            is NetworkResult.Success<AuthResponse> -> {
+                dataStoreManager.saveTokens(response.data.accessToken, response.data.refreshToken)
+                AuthResult.Success(response.data.toDomain())
+            }
             NetworkResult.Error.NoInternet -> AuthResult.Error.NetworkError
             else -> AuthResult.Error.UnknownError
         }
-        return res
     }
 
     override suspend fun savePinCode(pinCode: String) {
@@ -68,4 +50,12 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun getPinCode(): Flow<String?> = dataStoreManager.getPinCode()
+    override suspend fun matchPinCodes(pinCode: String): Boolean {
+        val savedPinCode = dataStoreManager.getPinCode().first()
+        return savedPinCode == pinCode
+    }
+
+    override suspend fun logout() {
+        TODO("Not yet implemented")
+    }
 }

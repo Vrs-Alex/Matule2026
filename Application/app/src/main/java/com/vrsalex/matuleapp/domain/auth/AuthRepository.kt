@@ -14,4 +14,8 @@ interface AuthRepository {
 
     fun getPinCode(): Flow<String?>
 
+    suspend fun matchPinCodes(pinCode: String): Boolean
+
+    suspend fun logout()
+
 }

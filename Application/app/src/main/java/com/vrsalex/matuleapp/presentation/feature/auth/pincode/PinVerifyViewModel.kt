@@ -15,14 +15,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PinCreateViewModel @Inject constructor(
+class PinVerifyViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _state = MutableStateFlow(
         PinCodeContract.State(
-            title = "Создайте пароль",
-            subtitle = "Для защиты ваших персональных данных"
+            title = "Вход",
+            subtitle = ""
         )
     )
     val state = _state.asStateFlow()
@@ -40,8 +40,13 @@ class PinCreateViewModel @Inject constructor(
                 if (currentPin.length == _state.value.codeLength) {
                     viewModelScope.launch {
                         delay(200)
-                        authRepository.savePinCode(currentPin)
-                        _channel.send(PinCodeContract.Effect.NavigateToMain)
+                        if (authRepository.matchPinCodes(currentPin)) {
+                            _channel.send(PinCodeContract.Effect.NavigateToMain)
+                        } else {
+                            _state.update { it.copy(pinCode = "", error = true) }
+                            delay(250)
+                            _state.update { it.copy(error = false) }
+                        }
                     }
                 }
             }

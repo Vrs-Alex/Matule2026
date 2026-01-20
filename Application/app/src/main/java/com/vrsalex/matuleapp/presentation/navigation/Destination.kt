@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data object AuthGraph
 
 @Serializable
-data object PinCodeVerifyDestination
+data object VerifyPinCodeDestination
 
 @Serializable
 data object LogInAndSignUpDestination

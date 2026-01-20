@@ -5,7 +5,7 @@ object PinCodeContract {
     data class State(
         val pinCode: String = "",
         val codeLength: Int = 4,
-        val error: String? = null,
+        val error: Boolean = false,
         val title: String = "",
         val subtitle: String = ""
     )

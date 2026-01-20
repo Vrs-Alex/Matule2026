@@ -1,5 +1,12 @@
 package com.vrsalex.matuleapp.presentation.navigation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -12,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.vrsalex.matuleapp.presentation.feature.splash.SplashScreen
 import com.vrsalex.matuleapp.presentation.navigation.graph.authGraph
+import com.vrsalex.matuleapp.presentation.navigation.graph.mainGraph
 
 @Composable
 fun AppNavHost(
@@ -21,15 +29,22 @@ fun AppNavHost(
 ) {
     val startedDestination by rootViewModel.startedDestination.collectAsStateWithLifecycle()
 
-    if (startedDestination == null) {
-        SplashScreen()
-    } else {
-        NavHost(
-            navController = navHost,
-            startDestination = startedDestination!!,
-            modifier = Modifier.fillMaxSize().statusBarsPadding()
-        ) {
-            authGraph(navHost)
+    AnimatedContent(startedDestination,
+        transitionSpec = {
+            fadeIn() togetherWith  fadeOut()
+        }
+    ) { sd ->
+        if (sd == null) {
+            SplashScreen()
+        } else {
+            NavHost(
+                navController = navHost,
+                startDestination = AuthGraph,
+                modifier = Modifier.fillMaxSize().statusBarsPadding()
+            ) {
+                authGraph(navHost, sd)
+                mainGraph(navHost)
+            }
         }
     }
 

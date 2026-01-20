@@ -1,8 +1,7 @@
-package com.vrsalex.matuleapp.data.datastore
+package com.vrsalex.matuleapp.data.local.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -19,17 +18,34 @@ class DataStoreManager @Inject constructor(
     @param:ApplicationContext private val  context: Context
 ) {
 
+    suspend fun saveTokens(accessToken: String, refreshToken: String){
+        context.dataStore.edit {
+            it[ACCESS_TOKEN] = accessToken
+            it[REFRESH_TOKEN] = refreshToken
+        }
+    }
+
+    suspend fun saveAccessToken(accessToken: String) =
+        context.dataStore.edit { it[ACCESS_TOKEN] = accessToken }
+
+    fun getAccessToken() = context.dataStore.data.map { it[ACCESS_TOKEN] }
+
+    suspend fun saveRefreshToken(refreshToken: String) =
+        context.dataStore.edit { it[REFRESH_TOKEN] = refreshToken  }
+
+    fun getRefreshToken() = context.dataStore.data.map { it[REFRESH_TOKEN] }
 
     suspend fun savePinCode(pinCode: String) =
-        context.dataStore.edit { it[PIC_CODE] = pinCode }
+        context.dataStore.edit { it[PIN_CODE] = pinCode }
 
-    fun getPinCode() = context.dataStore.data.map { it[PIC_CODE] }
-
+    fun getPinCode() = context.dataStore.data.map { it[PIN_CODE] }
 
 
 
     companion object {
-        val PIC_CODE = stringPreferencesKey("pic_code")
+        val PIN_CODE = stringPreferencesKey("pic_code")
+        val ACCESS_TOKEN = stringPreferencesKey("access_token")
+        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
 
 }

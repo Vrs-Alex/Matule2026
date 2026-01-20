@@ -1,15 +1,14 @@
 package com.vrsalex.matuleapp.presentation.common.pincode
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.snap
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,9 @@ fun PinCodeContent(
 ) {
     val scrollState = rememberScrollState()
     Column(
-        Modifier.fillMaxSize().verticalScroll(scrollState),
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -62,7 +65,7 @@ fun PinCodeContent(
         )
         Spacer(Modifier.height(56.dp))
 
-        PinCodeField(state.pinCode, state.codeLength)
+        PinCodeField(state.pinCode, state.codeLength, state.error)
 
         Spacer(Modifier.height(60.dp))
 
@@ -77,8 +80,27 @@ fun PinCodeContent(
 
 
 @Composable
-private fun PinCodeField(pinCode: String, codeLength: Int) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+private fun PinCodeField(pinCode: String, codeLength: Int, error: Boolean) {
+    val offsetX = remember { Animatable(0f) }
+    LaunchedEffect(error) {
+        if (error) {
+            offsetX.animateTo(0f,
+                animationSpec = keyframes {
+                    durationMillis = 500
+                    -10f at 50
+                    10f at 100
+                    -10f at 150
+                    10f at 200
+                    -5f at 300
+                    5f at 400
+                }
+            )
+        }
+    }
+    Row(
+        Modifier.offset(x = offsetX.value.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         repeat(codeLength){ index ->
 
             val background by animateColorAsState(
@@ -87,7 +109,8 @@ private fun PinCodeField(pinCode: String, codeLength: Int) {
             )
 
             Box(
-                Modifier.size(16.dp)
+                Modifier
+                    .size(16.dp)
                     .clip(CircleShape)
                     .border(1.dp, AppTheme.color.accent, CircleShape)
                     .background(background)
@@ -129,7 +152,9 @@ private fun PinCodeKeyboard(
                                 Image(
                                     painter = painterResource(R.drawable.del_icon),
                                     contentDescription = null,
-                                    modifier = Modifier.height(24.dp).width(35.dp)
+                                    modifier = Modifier
+                                        .height(24.dp)
+                                        .width(35.dp)
                                 )
                             }
                         }
