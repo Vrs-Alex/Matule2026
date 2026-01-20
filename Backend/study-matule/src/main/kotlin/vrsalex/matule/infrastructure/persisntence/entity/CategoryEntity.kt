@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "project_type")
-data class ProjectTypeEntity(
+@Table(name = "category")
+data class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     var id: Long? = null,
 
     @Column(name = "name", nullable = false)
     var name: String = "",
 
-    @Column(name = "description", nullable = true)
-    var description: String? = null
-
+    @Column(name = "description", nullable = false)
+    var description: String = ""
 )

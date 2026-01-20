@@ -28,7 +28,7 @@ jwt:
   secret: cnR3aHJ3aGhoaHJod3J0aHRyaHJ5aHJocnRyaHJ0aHJ3aHJ0aHRyd2hyd2hyaHJqanJ0anRleWp0anR5anRlag2=
   token:
     expiry-refresh-token-ms: 2592000000
-    expiry-access-token-ms: 30000
+    expiry-access-token-ms: 300000
   prefix: "Bearer "
   cookie:
     access-token-name: accessToken

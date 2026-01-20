@@ -42,9 +42,6 @@ data class UserEntity(
     @Column(name = "verified")
     var verified: Boolean = false,
 
-    @Column(name = "phone")
-    var phone: String = "",
-
     @Column(name = "created_at", nullable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(),
 

@@ -6,7 +6,7 @@ data class AddProjectCommand(
     val startDate: String,
     val endDate: String,
     val url: String,
-    val typeId: Long,
-    val categoryId: Long,
+    val type: String,
+    val category: String,
     val userId: Long
 )

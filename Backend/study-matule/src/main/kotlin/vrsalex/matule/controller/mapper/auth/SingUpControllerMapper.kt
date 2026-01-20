@@ -14,8 +14,7 @@ object SingUpControllerMapper {
         lastName = signUpRequest.lastName,
         patronymic = signUpRequest.patronymic,
         birthday = signUpRequest.birthday,
-        gender = signUpRequest.gender,
-        phoneNumber = signUpRequest.phoneNum
+        gender = signUpRequest.gender
     )
 
     fun toResponse(authResult: AuthResult): AuthResponse = AuthResponse(

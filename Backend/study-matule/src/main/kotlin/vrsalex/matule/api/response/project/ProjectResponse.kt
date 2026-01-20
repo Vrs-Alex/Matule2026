@@ -9,8 +9,8 @@ data class ProjectResponse(
     val startDate: String,
     val endDate: String,
     val url: String,
-    val type: ProjectTypeResponse,
-    val category: ProjectCategoryResponse,
+    val type: String,
+    val category: String,
     val createdAt: String,
     val updatedAt: String
 )

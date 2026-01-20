@@ -18,13 +18,13 @@ class GetProfileDataCommandHandler(
             ?: throw UserNotExistException("Пользователь не найден")
 
         return ProfileDataResult(
+            id = user.id?: 0L,
             email = user.email,
             firstName = user.firstName,
             lastName = user.lastName,
             patronymic = user.patronymic,
             birthday = user.birthday,
-            gender = user.gender,
-            phoneNum = user.phoneNum
+            gender = user.gender
         )
     }
 }

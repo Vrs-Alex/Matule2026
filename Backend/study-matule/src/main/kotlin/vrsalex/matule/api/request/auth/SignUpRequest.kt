@@ -10,6 +10,5 @@ data class SignUpRequest(
     val lastName: String,
     val patronymic: String,
     val birthday: String,
-    val gender: String,
-    val phoneNum: String
+    val gender: String
 )

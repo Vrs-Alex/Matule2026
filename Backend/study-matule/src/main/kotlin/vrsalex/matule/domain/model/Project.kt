@@ -8,8 +8,8 @@ data class Project(
     val startDate: String,
     val endDate: String,
     val url: String,
-    val type: ProjectType,
-    val category: ProjectCategory,
+    val type: String,
+    val category: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now()
 ) {

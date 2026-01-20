@@ -13,7 +13,7 @@ fun UserEntity.toDomain(): User = User(
     patronymic = this.patronymic,
     birthday = this.dateBirthday,
     gender = this.gender,
-    phoneNum = this.phone,
+//    phoneNum = this.phone,
     verified = this.verified
 )
 
@@ -24,7 +24,7 @@ fun User.toEntity(): UserEntity = UserEntity(
     firstname = this.firstName,
     lastname = this.lastName,
     patronymic = this.patronymic,
-    phone = this.phoneNum,
+//    phone = this.phoneNum,
     dateBirthday = this.birthday,
     gender = this.gender,
     verified = this.verified,

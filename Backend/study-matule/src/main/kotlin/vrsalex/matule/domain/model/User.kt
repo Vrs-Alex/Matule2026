@@ -11,6 +11,5 @@ data class User(
     val patronymic: String,
     val birthday: String,
     val gender: String,
-    val verified: Boolean,
-    val phoneNum: String
+    val verified: Boolean
 )

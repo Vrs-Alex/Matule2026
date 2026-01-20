@@ -32,6 +32,7 @@ class SecurityConfig(
             }
             .authorizeHttpRequests { authRequest ->
                 authRequest
+                    .requestMatchers("${ServerEndpoints.API.IMAGES_PREFIX}/**").permitAll()
                     .requestMatchers(*ServerEndpoints.API.PUBLIC_ENDPOINTS.toTypedArray()).permitAll()
                     .anyRequest().authenticated()
             }

@@ -11,8 +11,8 @@ object AddProjectControllerMapper {
         startDate = request.startDate,
         endDate = request.endDate,
         url = request.url,
-        typeId = request.typeId,
-        categoryId = request.categoryId,
+        type = request.type,
+        category = request.category,
         userId = userId
     )
 

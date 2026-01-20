@@ -2,9 +2,7 @@ package vrsalex.matule.application.handler.project
 
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import vrsalex.matule.api.response.project.ProjectCategoryResponse
 import vrsalex.matule.api.response.project.ProjectResponse
-import vrsalex.matule.api.response.project.ProjectTypeResponse
 import vrsalex.matule.application.command.project.GetProjectsCommand
 import vrsalex.matule.application.result.project.GetProjectsResult
 import vrsalex.matule.domain.model.Project
@@ -30,8 +28,8 @@ class GetProjectsCommandHandler(
             startDate = this.startDate,
             endDate = this.endDate,
             url = this.url,
-            type = ProjectTypeResponse(this.type.id!!, this.type.name, this.type.description),
-            category = ProjectCategoryResponse(this.category.id!!, this.category.name, this.category.description),
+            type = this.type,
+            category = this.category,
             createdAt = this.createdAt.format(formatter),
             updatedAt = this.updatedAt.format(formatter)
         )

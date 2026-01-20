@@ -35,13 +35,11 @@ data class ProjectEntity(
     @JoinColumn(name = "user_id", nullable = false)
     var user: UserEntity? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", nullable = false)
-    var type: ProjectTypeEntity? = null,
+    var type: String? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    var category: ProjectCategoryEntity? = null,
+    var category: String? = null,
 
     @Column(name = "created_at", nullable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(),

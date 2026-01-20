@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import vrsalex.matule.api.endpoints.ServerEndpoints
 import vrsalex.matule.api.request.project.AddProjectRequest
-import vrsalex.matule.api.response.project.ProjectCategoryResponse
 import vrsalex.matule.api.response.project.ProjectResponse
-import vrsalex.matule.api.response.project.ProjectTypeResponse
 import vrsalex.matule.application.command.project.AddProjectCommand
 import vrsalex.matule.application.command.project.GetProjectsCommand
 import vrsalex.matule.controller.facade.ProfileFacade
 import vrsalex.matule.controller.facade.ProjectFacade
 import vrsalex.matule.controller.mapper.project.AddProjectControllerMapper
-import vrsalex.matule.controller.mapper.project.toResponse
 import vrsalex.matule.domain.model.Project
 import vrsalex.matule.domain.model.User
+import java.io.File
 
 @RestController
 class ProjectController(
@@ -51,20 +49,5 @@ class ProjectController(
     ){
 
     }
-
-    @GetMapping(ServerEndpoints.API.USER_PROJECT_TYPE_GET_ENDPOINT)
-    fun getProjectType(): ResponseEntity<List<ProjectTypeResponse>> {
-        val projectTypes = projectFacade.getProjectTypes()
-        val res = projectTypes.projectTypes.map { it.toResponse() }
-        return ResponseEntity.ok(res)
-    }
-
-    @GetMapping(ServerEndpoints.API.USER_PROJECT_CATEGORY_GET_ENDPOINT)
-    fun getProjectCategory(): ResponseEntity<List<ProjectCategoryResponse>> {
-        val projectCategories = projectFacade.getProjectCategories()
-        val res = projectCategories.projectCategories.map { it.toResponse() }
-        return ResponseEntity.ok(res)
-    }
-
 
 }

@@ -12,6 +12,7 @@ import vrsalex.matule.application.handler.auth.RefreshTokenCommandHandler
 import vrsalex.matule.application.handler.auth.SignInCommandHandler
 import vrsalex.matule.application.handler.auth.SignUpCommandHandler
 import vrsalex.matule.application.handler.auth.VerifySignUpCommandHandler
+import vrsalex.matule.application.result.auth.AuthResult
 
 @Service
 class AuthFacade(
@@ -25,7 +26,7 @@ class AuthFacade(
     fun signIn(command: SignInCommand) = signInCommandHandler(command)
 
     @Transactional
-    fun signUp(command: SignUpCommand) = signUpCommandHandler(command)
+    fun signUp(command: SignUpCommand): AuthResult = signUpCommandHandler(command)
 
     @Transactional
     fun verifySignUp(command: VerifySignUpCommand) = verifySignUpCommandHandler(command)

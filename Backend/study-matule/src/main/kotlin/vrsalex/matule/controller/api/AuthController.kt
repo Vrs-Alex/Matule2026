@@ -41,7 +41,7 @@ class AuthController(
         @RequestBody request: SignUpRequest
     ): ResponseEntity<AuthResponse> {
         val tokens = authFacade.signUp(SingUpControllerMapper.toCommand(request))
-        return ResponseEntity.ok(SignInControllerMapper.toResponse(tokens))
+        return ResponseEntity.ok(VerifySignUpControllerMapper.toResponse(tokens))
     }
 
     @PostMapping(ServerEndpoints.API.AUTH_USER_REGISTER_VERIFY_ENDPOINT)

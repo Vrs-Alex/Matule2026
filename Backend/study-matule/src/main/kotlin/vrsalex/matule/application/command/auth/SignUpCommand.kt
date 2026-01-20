@@ -7,6 +7,5 @@ data class SignUpCommand(
     val lastName: String,
     val patronymic: String,
     val birthday: String,
-    val gender: String,
-    val phoneNumber: String
+    val gender: String
 )

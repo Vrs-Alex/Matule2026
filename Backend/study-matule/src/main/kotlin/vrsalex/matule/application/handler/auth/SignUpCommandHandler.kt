@@ -28,9 +28,10 @@ class SignUpCommandHandler(
         val userExisting = userRepository.findByEmail(command.email)
         if (userExisting != null) throw UserExistException("Пользователь с почтой ${command.email} уже существует")
         if (!validateEmail(command.email)) throw InvalidCredentialsException("Неверная почта")
-        if (!validatePhoneNumber(command.phoneNumber)) throw InvalidCredentialsException("Неверный формат номера телефона")
+//        if (!validatePhoneNumber(command.phoneNumber)) throw InvalidCredentialsException("Неверный формат номера телефона")
         validatePassword(command.password)
         val passwordHash = passwordEncoder.encode(command.password)
+        println(passwordHash)
         val user = userRepository.save(
             User(
                 id = null,
@@ -41,8 +42,8 @@ class SignUpCommandHandler(
                 patronymic = command.password,
                 birthday = command.birthday,
                 gender = command.gender,
-                verified = false,
-                phoneNum = command.phoneNumber
+                verified = true, // Without verify
+//                phoneNum = command.phoneNumber
             )
         )
         val tokens =  jwtService.generateTokens(user.id

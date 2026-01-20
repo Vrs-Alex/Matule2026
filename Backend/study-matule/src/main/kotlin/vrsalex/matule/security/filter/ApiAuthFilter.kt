@@ -22,7 +22,9 @@ class ApiAuthFilter(
 ): OncePerRequestFilter() {
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        val uri = request.servletPath
         return ServerEndpoints.API.PUBLIC_ENDPOINTS.contains(request.requestURI)
+                || uri.startsWith(ServerEndpoints.API.IMAGES_PREFIX)
     }
 
     override fun doFilterInternal(

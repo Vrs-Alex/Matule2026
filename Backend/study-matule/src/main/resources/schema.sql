@@ -10,7 +10,6 @@ CREATE TABLE app_user (
     date_birthday VARCHAR(50) NOT NULL,
     gender VARCHAR(20) NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT FALSE,
-    phone VARCHAR(20) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL
 );
@@ -25,17 +24,41 @@ CREATE TABLE refresh_token(
 );
 
 
-CREATE TABLE project_category (
+CREATE TABLE banner(
+    banner_id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    price VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE category(
     category_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255)
 );
 
 
-CREATE TABLE project_type (
-    type_id BIGSERIAL PRIMARY KEY,
+CREATE TABLE product(
+    product_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description VARCHAR(255)
+    subtitle VARCHAR(255) NOT NULL,
+    price VARCHAR(255) NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    category_id BIGINT NOT NULL,
+    CONSTRAINT fk_product_category
+        FOREIGN KEY (category_id)
+            REFERENCES category (category_id)
+);
+
+CREATE TABLE cart_item (
+    cart_item_id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    CONSTRAINT uk_user_product UNIQUE (user_id, product_id),
+    CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES app_user(user_id),
+    CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
 
 CREATE TABLE project (
@@ -52,13 +75,5 @@ CREATE TABLE project (
 
     CONSTRAINT fk_project_user
         FOREIGN KEY (user_id)
-            REFERENCES app_user (user_id),
-
-    CONSTRAINT fk_project_type
-        FOREIGN KEY (type_id)
-            REFERENCES project_type (type_id),
-
-    CONSTRAINT fk_project_category
-        FOREIGN KEY (category_id)
-            REFERENCES project_category (category_id)
+            REFERENCES app_user (user_id)
 );
