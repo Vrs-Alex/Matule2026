@@ -34,7 +34,7 @@ fun <T> AppTabBar(
         HorizontalDivider(thickness = 1.dp, color = Color(0x4DA0A0A0))
         Spacer(Modifier.height(8.dp))
         Row(
-            Modifier.fillMaxSize(),
+            Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
