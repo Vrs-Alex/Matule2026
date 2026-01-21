@@ -1,6 +1,8 @@
 package com.vrsalex.network.api.common
 
-interface AuthObserver {
+import kotlinx.coroutines.flow.SharedFlow
 
-    fun logout()
+interface AuthObserver {
+    val logoutEvent: SharedFlow<Unit>
+    suspend fun logout()
 }
