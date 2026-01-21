@@ -27,10 +27,11 @@ import com.vrsalex.uikit.theme.AppTheme
 fun <T> AppTabBar(
     items: List<AppTabBarItem<T>>,
     isSelectedItem: (T) -> Boolean,
-    onClickItem: (T) -> Unit
+    onClickItem: (T) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
-    Column(Modifier) {
+    Column(modifier) {
         HorizontalDivider(thickness = 1.dp, color = Color(0x4DA0A0A0))
         Spacer(Modifier.height(8.dp))
         Row(
