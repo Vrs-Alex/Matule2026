@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -24,17 +25,14 @@ import com.vrsalex.matuleapp.presentation.navigation.graph.mainGraph
 @Composable
 fun AppNavHost(
     navHost: NavHostController,
-    innerPadding: PaddingValues,
     rootViewModel: RootViewModel = hiltViewModel()
 ) {
     val startedDestination by rootViewModel.startedDestination.collectAsStateWithLifecycle()
 
-    AnimatedContent(startedDestination,
-        transitionSpec = {
-            fadeIn() togetherWith  fadeOut()
-        }
-    ) { sd ->
-        if (sd == null) {
+    AnimatedContent(
+        startedDestination, transitionSpec = { fadeIn() togetherWith  fadeOut() }
+    ) { startDest ->
+        if (startDest == null) {
             SplashScreen()
         } else {
             NavHost(
@@ -42,7 +40,7 @@ fun AppNavHost(
                 startDestination = AuthGraph,
                 modifier = Modifier.fillMaxSize().statusBarsPadding()
             ) {
-                authGraph(navHost, sd)
+                authGraph(navHost, startDest)
                 mainGraph(navHost)
             }
         }

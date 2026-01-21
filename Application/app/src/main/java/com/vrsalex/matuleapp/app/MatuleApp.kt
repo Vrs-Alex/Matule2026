@@ -1,11 +1,13 @@
 package com.vrsalex.matuleapp.app
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -38,7 +40,7 @@ import com.vrsalex.uikit.theme.AppTheme
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MatuleApp() {
     AppMatuleTheme() {
@@ -81,7 +83,8 @@ fun MatuleApp() {
                                 launchSingleTop = true
                                 restoreState = true
                             }
-                        }
+                        },
+                        modifier = Modifier.navigationBarsPadding()
                     )
                 }
             },
@@ -98,7 +101,7 @@ fun MatuleApp() {
 
             }
         ) { innerPadding ->
-            AppNavHost(navController, innerPadding)
+            AppNavHost(navController)
         }
     }
 }
