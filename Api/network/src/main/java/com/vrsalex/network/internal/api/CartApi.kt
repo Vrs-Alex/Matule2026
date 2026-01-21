@@ -12,16 +12,16 @@ import retrofit2.http.Query
 internal interface CartApi {
 
     @GET(ServerEndpoints.USER_CART_GET_ENDPOINT)
-    fun getUserCart(): Response<List<UserCartItemResponse>>
+    suspend fun getUserCart(): Response<List<UserCartItemResponse>>
 
 
     @POST(ServerEndpoints.USER_CART_ADD_ENDPOINT)
-    fun addItemInCart(
+    suspend fun addItemInCart(
         @Query("product_id") productId: Long
     ): Response<UserCartItemResponse>
 
     @DELETE(ServerEndpoints.USER_CART_REMOVE_ENDPOINT)
-    fun removeItemFromCart(
+    suspend fun removeItemFromCart(
         @Path("cart_item_id") cartItemId: Long
     ): Response<Unit>
 

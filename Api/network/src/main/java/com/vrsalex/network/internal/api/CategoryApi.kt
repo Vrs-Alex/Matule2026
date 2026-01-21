@@ -8,7 +8,7 @@ import retrofit2.http.GET
 internal interface CategoryApi {
 
     @GET(ServerEndpoints.CATEGORY_GET_ENDPOINT)
-    fun getCategories(): Response<List<CategoryResponse>>
+    suspend fun getCategories(): Response<List<CategoryResponse>>
 
 
 }

@@ -8,6 +8,6 @@ import retrofit2.http.GET
 internal interface BannerApi {
 
     @GET(ServerEndpoints.BANNER_GET_ENDPOINT)
-    fun getBanners(): Response<List<BannerResponse>>
+    suspend fun getBanners(): Response<List<BannerResponse>>
 
 }

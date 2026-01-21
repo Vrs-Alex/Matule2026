@@ -8,6 +8,6 @@ import retrofit2.http.GET
 internal interface ProfileApi {
 
     @GET(ServerEndpoints.PROFILE_GET_DATA_ENDPOINT)
-    fun getProfileData(): Response<ProfileDataResponse>
+    suspend fun getProfileData(): Response<ProfileDataResponse>
 
 }

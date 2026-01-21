@@ -8,7 +8,7 @@ import retrofit2.http.GET
 internal interface ProductApi {
 
     @GET(ServerEndpoints.PRODUCTS_GET_ENDPOINT)
-    fun getProducts(): Response<List<ProductResponse>>
+    suspend fun getProducts(): Response<List<ProductResponse>>
 
 
 }
