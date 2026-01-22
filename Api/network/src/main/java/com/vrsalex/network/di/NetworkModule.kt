@@ -25,13 +25,19 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class AuthClient
+internal annotation class AuthClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BaseUrl
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
-    private const val BASE_URL = "http://192.168.0.189:8080/api/"
+    @Provides
+    @BaseUrl
+    fun provideBaseUrl(): String = "http://192.168.0.189:8080/api/"
 
     @Provides
     @Singleton
@@ -72,8 +78,11 @@ internal object NetworkModule {
         .build()
 
     @Provides
-    fun provideRetrofitBuilder(json: Json): Retrofit.Builder = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+    fun provideRetrofitBuilder(
+        json: Json,
+        @BaseUrl url: String
+    ): Retrofit.Builder = Retrofit.Builder()
+        .baseUrl(url)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
     @Provides
