@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class BannerResponse(
     val id: Long,
     val title: String,
+    val price: String,
     val image: String
 )
