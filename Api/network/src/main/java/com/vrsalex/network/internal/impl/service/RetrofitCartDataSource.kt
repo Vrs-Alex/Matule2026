@@ -21,4 +21,8 @@ internal class RetrofitCartDataSource @Inject constructor(
     override suspend fun deleteCartItem(cartItemId: Long): NetworkResult<Unit> =
         safeApiCall { cartApi.removeItemFromCart(cartItemId) }
 
+    override suspend fun clearCart(): NetworkResult<Unit> =
+        safeApiCall { cartApi.clearAllCart() }
+
+
 }

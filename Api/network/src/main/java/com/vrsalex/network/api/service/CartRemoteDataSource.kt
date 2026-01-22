@@ -12,4 +12,6 @@ interface CartRemoteDataSource {
 
     suspend fun deleteCartItem(cartItemId: Long): NetworkResult<Unit>
 
+    suspend fun clearCart(): NetworkResult<Unit>
+
 }

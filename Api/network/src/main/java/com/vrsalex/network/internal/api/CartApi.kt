@@ -20,10 +20,15 @@ internal interface CartApi {
         @Query("product_id") productId: Long
     ): Response<UserCartItemResponse>
 
+    @POST(ServerEndpoints.USER_CART_REMOVE_ALL_ENDPOINT)
+    suspend fun clearAllCart(): Response<Unit>
+
     @DELETE(ServerEndpoints.USER_CART_REMOVE_ENDPOINT)
     suspend fun removeItemFromCart(
         @Path("cart_item_id") cartItemId: Long
     ): Response<Unit>
+
+
 
 
 }
