@@ -20,7 +20,8 @@ fun AppChip(
     active: Boolean,
     label: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isFixedWidth: Boolean = true
 ) {
 
     val backgroundColor by animateColorAsState(
@@ -34,7 +35,7 @@ fun AppChip(
     )
 
     Surface(
-        modifier = modifier.height(48.dp).width(129.dp),
+        modifier = modifier.height(48.dp).then(if (isFixedWidth) Modifier.width(129.dp) else Modifier),
         color = backgroundColor,
         shape = RoundedCornerShape(10.dp),
         onClick = onClick
