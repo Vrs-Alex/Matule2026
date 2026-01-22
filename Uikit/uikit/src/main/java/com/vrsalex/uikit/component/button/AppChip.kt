@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -21,7 +22,7 @@ fun AppChip(
     label: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isFixedWidth: Boolean = true
+    isFixedWidth: Boolean = false
 ) {
 
     val backgroundColor by animateColorAsState(
@@ -35,7 +36,8 @@ fun AppChip(
     )
 
     Surface(
-        modifier = modifier.height(48.dp).then(if (isFixedWidth) Modifier.width(129.dp) else Modifier),
+        modifier = modifier.height(48.dp).then(if (isFixedWidth) Modifier.width(129.dp)
+        else Modifier.padding(horizontal = 20.dp, vertical = 14.dp)),
         color = backgroundColor,
         shape = RoundedCornerShape(10.dp),
         onClick = onClick
