@@ -21,8 +21,7 @@ fun AppChip(
     active: Boolean,
     label: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    isFixedWidth: Boolean = false
+    modifier: Modifier = Modifier
 ) {
 
     val backgroundColor by animateColorAsState(
@@ -36,13 +35,12 @@ fun AppChip(
     )
 
     Surface(
-        modifier = modifier.height(48.dp).then(if (isFixedWidth) Modifier.width(129.dp)
-        else Modifier.padding(horizontal = 20.dp, vertical = 14.dp)),
+        modifier = modifier.height(48.dp),
         color = backgroundColor,
         shape = RoundedCornerShape(10.dp),
         onClick = onClick
     ) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Box(Modifier.fillMaxSize().padding(horizontal = 20.dp, vertical = 14.dp), contentAlignment = Alignment.Center){
             Text(
                 text = label,
                 style = AppTheme.type.textMedium,
