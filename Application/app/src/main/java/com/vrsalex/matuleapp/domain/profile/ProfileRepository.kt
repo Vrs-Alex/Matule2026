@@ -4,13 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {
 
-    fun getNotification(): Flow<Boolean>
-
-    fun getProfileData(): Flow<ShortProfile>
-
-    suspend fun changeNotification(b: Boolean)
-
-    suspend fun logout()
+    fun getShortProfileData(): Flow<ShortProfile>
 
     suspend fun fetchAndSaveProfile()
 

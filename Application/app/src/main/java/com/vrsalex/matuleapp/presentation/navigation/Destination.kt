@@ -44,3 +44,13 @@ data object BottomTabProjectDestination: BottomTabDestination
 data object BottomTabProfileDestination: BottomTabDestination
 
 
+
+
+@Serializable
+data object CartDestination
+
+
+@Serializable
+data object CreateProjectDestination
+
+

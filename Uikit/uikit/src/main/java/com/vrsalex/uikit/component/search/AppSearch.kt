@@ -2,6 +2,7 @@ package com.vrsalex.uikit.component.search
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,6 +30,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -43,48 +46,57 @@ fun AppSearch(
     onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
-    imeOptions: KeyboardOptions = KeyboardOptions.Default
+    imeOptions: KeyboardOptions = KeyboardOptions.Default,
+    endAction: (@Composable () -> Unit)? = null
 ) {
-    Box( modifier = modifier.height(48.dp)
-        .fillMaxWidth()
-        .clip(RoundedCornerShape(10.dp))
-        .background(AppTheme.color.inputBg)
-        .border(BorderStroke(1.dp, AppTheme.color.inputStroke), RoundedCornerShape(10.dp))
+    Row(
+        modifier =modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            Modifier.fillMaxSize().padding(horizontal = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier.height(48.dp)
+                .weight(1f)
+                .clip(RoundedCornerShape(10.dp))
+                .background(AppTheme.color.inputBg)
+                .border(BorderStroke(1.dp, AppTheme.color.inputStroke), RoundedCornerShape(10.dp))
+
         ) {
-            AppIcon(R.drawable.icon_search, tint = AppTheme.color.description)
-            BasicTextField(
-                modifier = Modifier.weight(1f),
-                value = value,
-                singleLine = true,
-                onValueChange = onValueChange,
-                textStyle = AppTheme.type.textRegular,
-                keyboardOptions = imeOptions,
-                cursorBrush = SolidColor(AppTheme.color.accent),
-                decorationBox = { innerTextField ->
-                    Box() {
-                        if (value.isEmpty()) {
-                            Text(
-                                text = placeholder,
-                                style = AppTheme.type.textRegular,
-                                color = AppTheme.color.caption
-                            )
+            Row(
+                Modifier.fillMaxSize().padding(horizontal = 14.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AppIcon(R.drawable.icon_search, tint = AppTheme.color.description)
+                BasicTextField(
+                    modifier = Modifier.weight(1f),
+                    value = value,
+                    singleLine = true,
+                    onValueChange = onValueChange,
+                    textStyle = AppTheme.type.textRegular,
+                    keyboardOptions = imeOptions,
+                    cursorBrush = SolidColor(AppTheme.color.accent),
+                    decorationBox = { innerTextField ->
+                        Box() {
+                            if (value.isEmpty()) {
+                                Text(
+                                    text = placeholder,
+                                    style = AppTheme.type.textRegular,
+                                    color = AppTheme.color.caption
+                                )
+                            }
+                            innerTextField()
                         }
-                        innerTextField()
                     }
-                }
-            )
-            if (value.isNotEmpty()) {
-                AppIcon(
-                    R.drawable.icon_close, tint = AppTheme.color.description,
-                    onClick = { onValueChange("") }
                 )
+                if (value.isNotEmpty()) {
+                    AppIcon(
+                        R.drawable.icon_close, tint = AppTheme.color.description,
+                        onClick = { onValueChange("") }
+                    )
+                }
             }
         }
+        endAction?.invoke()
     }
 
 }

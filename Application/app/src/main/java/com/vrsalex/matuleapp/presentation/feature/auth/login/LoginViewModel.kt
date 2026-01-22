@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
 import com.vrsalex.matuleapp.domain.auth.AuthResult
 import com.vrsalex.matuleapp.domain.auth.model.AuthTokens
+import com.vrsalex.matuleapp.domain.validation.EmailValidation
 import com.vrsalex.matuleapp.presentation.common.snackbar.SnackbarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -34,7 +36,7 @@ class LoginViewModel @Inject constructor(
             is LoginContract.Event.OnEmailChanged -> _state.update { it.copy(email = e.email, emailError = null) }
             is LoginContract.Event.OnPasswordChanged -> _state.update { it.copy(password = e.password, passwordError = null) }
             LoginContract.Event.OnSignInClick -> {
-                val error = com.vrsalex.matuleapp.domain.validation.EmailValidation.validateEmail(_state.value.email)
+                val error = EmailValidation.validateEmail(_state.value.email)
                 if (error != null) {
                     _state.update { it.copy(emailError = error) }
                     return
@@ -62,6 +64,10 @@ class LoginViewModel @Inject constructor(
                 AuthResult.Error.NetworkError -> {
                     _state.update { it.copy(isLoading = false) }
                     snackbarController.showMessage("Нет интернета")
+                }
+                AuthResult.Error.UserNotFound -> {
+                    _state.update { it.copy(isLoading = false) }
+                    snackbarController.showMessage("Такого пользователя не существует")
                 }
                 else  -> {
                     _state.update { it.copy(isLoading = false) }

@@ -7,5 +7,6 @@ import vrsalex.matule.domain.model.Banner
 fun Banner.toResponse() = BannerResponse(
     id = this.id!!,
     title = this.title,
-    image = ServerEndpoints.API.IMAGES_PREFIX + "/" + this.image,
+    price = this.price,
+    image = "image/" + this.image,
 )

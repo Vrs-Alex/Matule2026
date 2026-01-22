@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -102,24 +104,29 @@ fun AppSelect(
             },
             sheetState = sheetState,
             content = {
-                items.forEach { item ->
-                    Surface(
-                        modifier = Modifier.height(40.dp).fillMaxWidth(),
-                        shape = RoundedCornerShape(10.dp),
-                        onClick = {
-                            onValueChange(item)
-                            scope.launch {
-                                sheetState.hide()
-                            }.invokeOnCompletion {
-                                visibleBottomSheet = false
+                Column(
+                    Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    items.forEach { item ->
+                        Surface(
+                            modifier = Modifier.height(48.dp).fillMaxWidth(0.8f),
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                onValueChange(item)
+                                scope.launch {
+                                    sheetState.hide()
+                                    visibleBottomSheet = false
+                                }
+                            },
+                            color = Color.Transparent
+                        ) {
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = item,
+                                    style = AppTheme.type.title2Regular
+                                )
                             }
-                        }
-                    ) {
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
-                            Text(
-                                text = item,
-                                style = AppTheme.type.textRegular
-                            )
                         }
                     }
                 }

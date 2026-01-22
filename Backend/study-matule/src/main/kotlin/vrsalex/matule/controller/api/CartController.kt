@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import vrsalex.matule.api.endpoints.ServerEndpoints
 import vrsalex.matule.api.response.cart.UserCartItemResponse
 import vrsalex.matule.application.command.cart.AddCartItemCommand
+import vrsalex.matule.application.command.cart.ClearAllCartCommand
 import vrsalex.matule.application.command.cart.GetCartItemsCommand
 import vrsalex.matule.application.command.cart.RemoveCartItemCommand
 import vrsalex.matule.controller.facade.CartFacade
@@ -36,16 +37,24 @@ class CartController(
         @AuthenticationPrincipal user: User,
         @RequestParam("product_id") productId: Long,
     ): ResponseEntity<UserCartItemResponse> {
-        val item = cartFacade.addCartItem(AddCartItemCommand(productId, user.id!!))
+        val item = cartFacade.addCartItem(AddCartItemCommand(user.id!!, productId))
         return ResponseEntity.ok(item.toResponse())
+    }
+
+    @PostMapping(ServerEndpoints.API.USER_CART_REMOVE_ALL_ENDPOINT)
+    fun clearAllCart(
+        @AuthenticationPrincipal user: User,
+    ): ResponseEntity<Unit> {
+        cartFacade.clearAllCart(ClearAllCartCommand(user.id!!))
+        return ResponseEntity.ok().build()
     }
 
     @DeleteMapping(ServerEndpoints.API.USER_CART_REMOVE_ENDPOINT)
     fun deleteItemFromCart(
-        @PathVariable("cart_item_id") cartItemId: Long,
+        @PathVariable("cart_item_id") productId: Long,
         @AuthenticationPrincipal user: User
     ): ResponseEntity<Unit> {
-        cartFacade.removeCartItem(RemoveCartItemCommand(cartItemId, user.id!!))
+        cartFacade.removeCartItem(RemoveCartItemCommand(productId, user.id!!))
         return ResponseEntity.noContent().build()
     }
 

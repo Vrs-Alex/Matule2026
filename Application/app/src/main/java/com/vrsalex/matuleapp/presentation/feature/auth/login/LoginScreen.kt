@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.vrsalex.matuleapp.R
+import com.vrsalex.matuleapp.presentation.common.BaseColumn
 import com.vrsalex.uikit.component.button.AppButton
 import com.vrsalex.uikit.component.button.AppButtonState
 import com.vrsalex.uikit.component.button.AppLoginButton
@@ -63,10 +64,10 @@ private fun LoginContent(
     event: (e: LoginContract.Event) -> Unit
 ) {
     val scrollState = rememberScrollState()
-    Column(
+    BaseColumn (
         Modifier.fillMaxSize()
-            .verticalScroll(scrollState)
             .padding(horizontal = 20.dp),
+        scrollState = scrollState,
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

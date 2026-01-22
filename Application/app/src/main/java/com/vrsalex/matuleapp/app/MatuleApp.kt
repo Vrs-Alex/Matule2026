@@ -3,7 +3,9 @@ package com.vrsalex.matuleapp.app
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -69,7 +71,7 @@ fun MatuleApp() {
             containerColor = Color.White,
             contentColor = AppTheme.color.black,
             bottomBar = {
-                AnimatedVisibility(isShowBottomSheet, enter = slideInVertically { it }, exit = fadeOut()) {
+                AnimatedVisibility(isShowBottomSheet, enter = slideInVertically { it }, exit = shrinkOut { it }) {
                     AppTabBar<BottomTabDestination>(
                         items = bottomTabItems,
                         isSelectedItem = { payload ->

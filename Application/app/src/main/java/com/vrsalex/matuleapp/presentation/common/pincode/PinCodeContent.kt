@@ -38,6 +38,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.vrsalex.matuleapp.R
+import com.vrsalex.matuleapp.presentation.common.BaseColumn
 import com.vrsalex.uikit.theme.AppTheme
 
 @Composable
@@ -46,7 +47,7 @@ fun PinCodeContent(
     event: (e: PinCodeContract.Event) -> Unit
 ) {
     val scrollState = rememberScrollState()
-    Column(
+    BaseColumn(
         Modifier
             .fillMaxSize()
             .verticalScroll(scrollState),

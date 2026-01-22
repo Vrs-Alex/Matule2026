@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.vrsalex.matuleapp.R
+import com.vrsalex.matuleapp.presentation.common.BaseColumn
 import com.vrsalex.uikit.component.controller.AppToggle
 import com.vrsalex.uikit.component.tabbar.appTabBarPadding
 import com.vrsalex.uikit.theme.AppTheme
@@ -71,11 +72,10 @@ private fun ProfileContent(
     event: (e: ProfileContract.Event) -> Unit
 ) {
 
-    Column(
+    BaseColumn (
         modifier = Modifier.fillMaxSize()
-            .padding(horizontal = 20.dp)
-            .appTabBarPadding()
-            .safeContentPadding()
+            .padding(horizontal = 20.dp),
+        withTabBarPadding = true
     ) {
         Spacer(Modifier.height(32.dp))
         Text(

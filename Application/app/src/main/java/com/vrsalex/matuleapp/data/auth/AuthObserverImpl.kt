@@ -22,11 +22,11 @@ class AuthObserverImpl @Inject constructor(
     override val logoutEvent: SharedFlow<Unit> = _sharedFlow.asSharedFlow()
 
     override suspend fun logout() {
-        dataStoreManager.clearAll()
         withContext(Dispatchers.IO) {
+            dataStoreManager.clearAll()
             appDatabase.clearAllTables()
+            _sharedFlow.emit(Unit)
         }
-        _sharedFlow.emit(Unit)
     }
 
 }

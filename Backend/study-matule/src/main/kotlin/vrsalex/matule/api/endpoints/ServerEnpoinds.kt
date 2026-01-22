@@ -29,6 +29,7 @@ object ServerEndpoints {
         const val USER_CART_GET_ENDPOINT = "$API_PREFIX$CART_PREFIX/get"
         const val USER_CART_ADD_ENDPOINT = "$API_PREFIX$CART_PREFIX/add"
         const val USER_CART_REMOVE_ENDPOINT = "$API_PREFIX$CART_PREFIX/remove/{cart_item_id}"
+        const val USER_CART_REMOVE_ALL_ENDPOINT = "$API_PREFIX$CART_PREFIX/remove/all"
 
         const val PROJECT_PREFIX = "/project"
         const val USER_PROJECTS_GET_ENDPOINT = "$API_PREFIX$PROJECT_PREFIX/get"

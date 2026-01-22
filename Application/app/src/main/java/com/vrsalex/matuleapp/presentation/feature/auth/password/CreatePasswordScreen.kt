@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.vrsalex.matuleapp.R
+import com.vrsalex.matuleapp.presentation.common.BaseColumn
 import com.vrsalex.uikit.component.button.AppButton
 import com.vrsalex.uikit.component.button.AppButtonState
 import com.vrsalex.uikit.component.input.AppTextInput
@@ -59,7 +60,7 @@ private fun CreatePasswordContent(
     state: CreatePasswordContract.State,
     event: (e: CreatePasswordContract.Event) -> Unit
 ) {
-    Column(
+    BaseColumn(
         Modifier.fillMaxSize()
             .padding(horizontal = 20.dp)
     ) {

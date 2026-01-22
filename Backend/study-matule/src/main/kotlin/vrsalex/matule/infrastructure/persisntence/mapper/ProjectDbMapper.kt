@@ -14,7 +14,8 @@ fun ProjectEntity.toDomain(): Project = Project(
     type = this.type!!,
     category = this.category!!,
     createdAt = this.createdAt,
-    updatedAt = this.updatedAt
+    updatedAt = this.updatedAt,
+    forPerson = ""
 )
 
 

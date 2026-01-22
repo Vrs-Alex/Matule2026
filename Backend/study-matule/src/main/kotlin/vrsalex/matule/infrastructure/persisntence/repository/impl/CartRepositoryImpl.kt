@@ -33,5 +33,9 @@ class CartRepositoryImpl(
         return entity?.toDomain()
     }
 
+    override fun clearAll() {
+        cartJpaRepository.deleteAll()
+    }
+
 
 }

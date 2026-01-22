@@ -12,12 +12,12 @@ class RemoveCartItemCommandHandler(
 ) {
 
     operator fun invoke(command: RemoveCartItemCommand) {
-        val item = cartRepository.findByCartId(command.cartId)
+        val item = cartRepository.findByUserIdAndProductId(command.userId, command.cartId)
             ?: throw CartNotExistItemException("Элемента с id: ${command.cartId} в корзине нет")
 
         if (item.user.id != command.userId)
             throw NoAccessException("Нет доступа к чужой корзине")
-        cartRepository.deleteById(command.cartId)
+        cartRepository.deleteById(item.cartItemId!!)
     }
 
 }

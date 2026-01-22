@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.vrsalex.matuleapp.presentation.common.BaseColumn
 import com.vrsalex.uikit.component.button.AppButton
 import com.vrsalex.uikit.component.button.AppButtonState
 import com.vrsalex.uikit.component.input.AppTextInput
@@ -56,7 +57,7 @@ private fun CreateProfileContent(
 ) {
 
     val scrollState = rememberScrollState()
-    Column(
+    BaseColumn (
         modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp).verticalScroll(scrollState),
         verticalArrangement = Arrangement.SpaceAround
     ) {
@@ -103,7 +104,7 @@ private fun CreateProfileContent(
                 imeOptions = KeyboardOptions(imeAction = ImeAction.Next)
             )
             AppSelect(
-                items = listOf("Мужчина", "Женщина"),
+                items = listOf("Мужской", "Женский"),
                 selectedItem = state.gender,
                 label = "Пол",
                 onValueChange = { event(CreateProfileContract.Event.OnGenderChanged(it)) }

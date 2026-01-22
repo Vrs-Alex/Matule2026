@@ -15,6 +15,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.vrsalex.uikit.R
 import com.vrsalex.uikit.component.icon.AppIcon
@@ -36,8 +37,8 @@ fun AppModalBottomSheet(
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
-        containerColor = AppTheme.color.white,
-        contentColor = AppTheme.color.black,
+        containerColor = Color.White,
+        contentColor = Color.Black,
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         dragHandle = null
     ) {

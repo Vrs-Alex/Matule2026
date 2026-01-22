@@ -7,6 +7,7 @@ import vrsalex.matule.application.result.project.GetProjectsResult
 import vrsalex.matule.domain.model.Project
 import vrsalex.matule.domain.port.repository.ProjectRepository
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Component
 class AddProjectCommandHandler(
@@ -22,10 +23,12 @@ class AddProjectCommandHandler(
         val project = Project(
             id = command.id, name = command.name, startDate = command.startDate,
             endDate = command.endDate, url = command.url, type = command.type,
-            category = command.category, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+            category = command.category, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(),
+            forPerson = command.forPerson
+        )
 
         val projectFromDb = projectRepository.saveProject(project)
-        val formatter = java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
         val result = GetProjectsResult(
             id = projectFromDb.id!!,
             name = projectFromDb.name,

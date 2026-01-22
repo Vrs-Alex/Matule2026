@@ -3,6 +3,7 @@ package com.vrsalex.matuleapp.data.auth
 import com.vrsalex.matuleapp.data.local.datastore.DataStoreManager
 import com.vrsalex.matuleapp.domain.auth.AuthRepository
 import com.vrsalex.matuleapp.domain.auth.AuthResult
+import com.vrsalex.matuleapp.domain.auth.AuthResult.*
 import com.vrsalex.matuleapp.domain.auth.model.AuthTokens
 import com.vrsalex.matuleapp.domain.auth.model.SignUpParams
 import com.vrsalex.network.api.NetworkResult
@@ -27,10 +28,14 @@ class AuthRepositoryImpl @Inject constructor(
         return when(val response = authRemoteDataSource.logIn(SignInRequest(email, password))) {
             is NetworkResult.Success<AuthResponse> -> {
                 dataStoreManager.saveTokens(response.data.accessToken, response.data.refreshToken)
-                AuthResult.Success(response.data.toDomain())
+                Success(response.data.toDomain())
             }
             NetworkResult.Error.NoInternet -> AuthResult.Error.NetworkError
-            else -> AuthResult.Error.UnknownError
+            is NetworkResult.Error.HttpError -> {
+                if (response.code == 406) AuthResult.Error.UserNotFound
+                else AuthResult.Error.UnknownError
+            }
+            else -> Error.UnknownError
         }
     }
 

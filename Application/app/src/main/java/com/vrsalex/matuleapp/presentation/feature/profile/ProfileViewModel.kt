@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vrsalex.matuleapp.domain.profile.ProfileRepository
+import com.vrsalex.matuleapp.domain.setting.SettingRepository
+import com.vrsalex.network.api.common.AuthObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,13 +19,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val authObserver: AuthObserver,
+    private val settingRepository: SettingRepository
 ): ViewModel() {
 
 
     val state = combine(
-        profileRepository.getProfileData(),
-        profileRepository.getNotification()
+        profileRepository.getShortProfileData(),
+        settingRepository.getNotification()
     ){ profile, notification ->
         ProfileContract.State(
             firstName = profile.firstName,
@@ -44,12 +48,12 @@ class ProfileViewModel @Inject constructor(
         when(e) {
             is ProfileContract.Event.OnChangeNotification -> {
                 viewModelScope.launch {
-                    profileRepository.changeNotification(e.b)
+                    settingRepository.changeNotification(e.b)
                 }
             }
             ProfileContract.Event.OnLogout -> {
                 viewModelScope.launch {
-                    profileRepository.logout()
+                    authObserver.logout()
                 }
             }
             ProfileContract.Event.OnPrivacyPolicy -> {

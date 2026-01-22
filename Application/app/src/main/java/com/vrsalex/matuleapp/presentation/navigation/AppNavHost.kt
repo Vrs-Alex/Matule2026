@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.vrsalex.matuleapp.presentation.feature.splash.SplashScreen
 import com.vrsalex.matuleapp.presentation.navigation.graph.authGraph
+import com.vrsalex.matuleapp.presentation.navigation.graph.cartScreen
 import com.vrsalex.matuleapp.presentation.navigation.graph.mainGraph
 
 @Composable
@@ -28,6 +29,14 @@ fun AppNavHost(
     rootViewModel: RootViewModel = hiltViewModel()
 ) {
     val startedDestination by rootViewModel.startedDestination.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        rootViewModel.authObserver.logoutEvent.collect {
+            navHost.navigate(LogInAndSignUpDestination){
+                popUpTo(navHost.graph.id){inclusive = true}
+            }
+        }
+    }
 
     AnimatedContent(
         startedDestination, transitionSpec = { fadeIn() togetherWith  fadeOut() }
@@ -38,10 +47,12 @@ fun AppNavHost(
             NavHost(
                 navController = navHost,
                 startDestination = AuthGraph,
-                modifier = Modifier.fillMaxSize().statusBarsPadding()
+                modifier = Modifier.fillMaxSize()
             ) {
                 authGraph(navHost, startDest)
                 mainGraph(navHost)
+
+                cartScreen(navHost)
             }
         }
     }

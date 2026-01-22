@@ -13,4 +13,6 @@ interface CartRepository {
     fun findByUserIdAndProductId(userId: Long, productId: Long): CartItem?
 
     fun findByCartId(cartId: Long): CartItem?
+
+    fun clearAll()
 }

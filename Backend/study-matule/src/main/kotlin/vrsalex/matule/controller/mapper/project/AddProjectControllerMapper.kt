@@ -13,7 +13,8 @@ object AddProjectControllerMapper {
         url = request.url,
         type = request.type,
         category = request.category,
-        userId = userId
+        userId = userId,
+        forPerson = ""
     )
 
     

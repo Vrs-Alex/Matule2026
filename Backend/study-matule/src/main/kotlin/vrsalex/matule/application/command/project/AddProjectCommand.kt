@@ -8,5 +8,6 @@ data class AddProjectCommand(
     val url: String,
     val type: String,
     val category: String,
-    val userId: Long
+    val userId: Long,
+    val forPerson: String
 )
