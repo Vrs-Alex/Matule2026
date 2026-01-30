@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.domain.cart.CartRepository
 import com.vrsalex.matuleapp.presentation.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -53,6 +54,7 @@ class CartViewModel @Inject constructor(
                 }
             }
             CartContract.Event.OnClearCart -> {
+                AppMetrica.reportEvent("Нажата кнопка очищения корзины")
                 viewModelScope.launch {
                     cartRepository.clearCart()
                 }

@@ -7,6 +7,7 @@ import com.vrsalex.matuleapp.domain.profile.ProfileRepository
 import com.vrsalex.matuleapp.domain.setting.SettingRepository
 import com.vrsalex.network.api.common.AuthObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,6 +48,7 @@ class ProfileViewModel @Inject constructor(
     fun onEvent(e: ProfileContract.Event){
         when(e) {
             is ProfileContract.Event.OnChangeNotification -> {
+                AppMetrica.reportEvent("Отключено/включено уведомление")
                 viewModelScope.launch {
                     settingRepository.changeNotification(e.b)
                 }

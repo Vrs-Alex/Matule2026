@@ -9,6 +9,7 @@ import com.vrsalex.matuleapp.domain.product.Product
 import com.vrsalex.matuleapp.domain.product.ProductRepository
 import com.vrsalex.matuleapp.presentation.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -110,7 +111,10 @@ class CatalogViewModel @Inject constructor(
                     cartRepository.removeItem(CartItem(e.product, 1))
                 }
             }
-            CatalogContract.Event.OnCartClick -> { viewModelScope.launch { _channel.send(CatalogContract.Effect.OnCartClick) } }
+            CatalogContract.Event.OnCartClick -> {
+                AppMetrica.reportEvent("Открыта корзина")
+                viewModelScope.launch { _channel.send(CatalogContract.Effect.OnCartClick) }
+            }
             is CatalogContract.Event.OnProductClick -> {
                 _selectedProduct.update { e.product }
             }

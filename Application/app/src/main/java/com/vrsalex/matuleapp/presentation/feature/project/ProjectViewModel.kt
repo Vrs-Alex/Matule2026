@@ -3,6 +3,7 @@ package com.vrsalex.matuleapp.presentation.feature.project
 import androidx.lifecycle.viewModelScope
 import com.vrsalex.matuleapp.presentation.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class ProjectViewModel @Inject constructor(
 
 ): BaseViewModel() {
+
 
     private val _state = MutableStateFlow(ProjectContract.State())
     val state = _state.asStateFlow()

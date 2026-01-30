@@ -8,6 +8,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vrsalex.matuleapp.presentation.navigation.RootViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.appmetrica.analytics.AppMetrica
+import io.appmetrica.analytics.AppMetricaConfig
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

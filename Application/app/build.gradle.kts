@@ -51,6 +51,9 @@ android {
 
 dependencies {
 
+    implementation("io.appmetrica.analytics:analytics:8.0.0")
+
+
     implementation(files("lib/uikit-release.aar"))
     implementation(files("lib/network-release.aar"))
 
