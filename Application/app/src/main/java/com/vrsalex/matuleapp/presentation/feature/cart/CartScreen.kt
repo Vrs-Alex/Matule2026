@@ -10,9 +10,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.keepScreenOn
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,6 +43,7 @@ fun CartScreen(
         }
     }
 
+
     CartContent(state, viewModel::onEvent)
 }
 
@@ -48,7 +52,7 @@ private fun CartContent(
     state: CartContract.State,
     event: (e: CartContract.Event) -> Unit
 ) {
-    BaseColumn(Modifier.padding(horizontal = 20.dp).padding(top = 16.dp)) {
+    BaseColumn(Modifier.padding(horizontal = 20.dp).padding(top = 16.dp).keepScreenOn()) {
         AppLargeHeader(
             title = "Корзина",
             onBack = { event(CartContract.Event.OnBack) },

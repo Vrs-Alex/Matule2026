@@ -11,7 +11,7 @@ class App: Application(){
         super.onCreate()
 
 
-        val config = AppMetricaConfig.newConfigBuilder("<API>").build()
+        val config = AppMetricaConfig.newConfigBuilder("337f6742-93ed-4e34-9582-4662c51ce9ba").build()
         AppMetrica.activate(this, config)
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +41,9 @@ import com.vrsalex.uikit.component.input.AppTextInput
 import com.vrsalex.uikit.component.modal.AppModalBottomSheet
 import com.vrsalex.uikit.component.select.AppSelect
 import com.vrsalex.uikit.theme.AppTheme
+import io.appmetrica.analytics.impl.bo
 import org.jetbrains.annotations.Async
+import kotlin.contracts.contract
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +61,23 @@ fun CreateProjectScreen(
             viewModel.onEvent(CreateProjectContract.Event.OnUriChange(uri))
         }
     }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { bool ->
+        if (bool) {
+            state.tempPhotoUri?.let {
+                viewModel.onEvent(CreateProjectContract.Event.OnUriChange(state.tempPhotoUri))
+            }
+        }
+    }
+
+    LaunchedEffect(state.tempPhotoUri) {
+        if (state.tempPhotoUri != null) {
+            cameraLauncher.launch(state.tempPhotoUri!!)
+        }
+    }
+
 
 
     CreateProjectContent(state, viewModel::onEvent)
@@ -84,7 +104,7 @@ fun CreateProjectScreen(
                     Text(
                         text = "Сделать фото",
                         style = AppTheme.type.title2Regular,
-                        modifier = Modifier.clickable {  }
+                        modifier = Modifier.clickable { viewModel.onEvent(CreateProjectContract.Event.OnCreateTempFileForCamera) }
                     )
                     Spacer(Modifier.height(32.dp))
                 }

@@ -14,7 +14,8 @@ object CreateProjectContract {
         val category: String? = null,
         val imageUri: Uri? = null,
         val isLoading: Boolean = false,
-        val isVisibleBottomSheet: Boolean = false
+        val isVisibleBottomSheet: Boolean = false,
+        val tempPhotoUri: Uri? = null
     )
 
     sealed interface Event {
@@ -29,6 +30,7 @@ object CreateProjectContract {
         data object OnSelectImage: Event
         data object OnCreate: Event
         data object OnChangeVisibleBottomSheet: Event
+        data object OnCreateTempFileForCamera: Event
     }
 
     sealed interface Effect {

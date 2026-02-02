@@ -1,19 +1,24 @@
 package com.vrsalex.matuleapp.presentation.feature.project.create
 
+import android.content.Context
+import androidx.core.content.FileProvider
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import com.vrsalex.matuleapp.presentation.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateProjectViewModel @Inject constructor(
-
+    @ApplicationContext private val context: Context
 ): BaseViewModel() {
 
     private val _state = MutableStateFlow(CreateProjectContract.State())
@@ -41,7 +46,16 @@ class CreateProjectViewModel @Inject constructor(
             }
 
             CreateProjectContract.Event.OnChangeVisibleBottomSheet -> _state.update { it.copy(isVisibleBottomSheet = !it.isVisibleBottomSheet) }
+            CreateProjectContract.Event.OnCreateTempFileForCamera -> {
+                val tempFile = File(context.cacheDir, "img_${System.currentTimeMillis()}.jpg")
 
+                val publicUri = FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    tempFile
+                )
+                _state.update { it.copy(tempPhotoUri = publicUri) }
+            }
         }
     }
 
