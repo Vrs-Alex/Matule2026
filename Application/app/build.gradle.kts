@@ -2,9 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.serialization)
@@ -50,6 +49,29 @@ android {
 }
 
 dependencies {
+
+
+    testImplementation(platform(libs.junit.bom))
+
+    // API и параметры для написания кода
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
+
+    // Runtime: Движок и Лаунчер для выполнения тестов
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    // Поддержка старого JUnit 4 (если есть тесты на нем)
+    testRuntimeOnly(libs.junit.vintage.engine)
+
+
+    testImplementation(libs.truth)             // Читаемые проверки (Assertions)
+    testImplementation(libs.mockk)             // Создание заглушек (Mocks)
+    testImplementation(libs.turbine)           // Тестирование Flow/StateFlow
+    testImplementation(libs.coroutines.test)   // Работа с runTest и диспатчерами
+    testImplementation(libs.arch.core.testing) // Синхронная работа LiveData
+    testImplementation(libs.okhttp.mockwebserver) // Мок
+
 
     implementation("io.appmetrica.analytics:analytics:8.0.0")
 
@@ -97,11 +119,15 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

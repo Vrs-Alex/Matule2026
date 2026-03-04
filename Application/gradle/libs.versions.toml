@@ -10,7 +10,6 @@ activityCompose = "1.12.2"
 composeBom = "2026.01.00"
 
 
-
 datastorePreferences = "1.2.0"
 kotlinxSerializationJson = "1.9.0"
 hiltNavigationCompose = "1.3.0"
@@ -27,7 +26,33 @@ coreSplashscreen = "1.2.0"
 coil = "3.0.0"
 
 
+junit-bom = "5.10.2"
+truth = "1.4.2"
+mockk = "1.13.10"
+turbine = "1.1.0"
+coroutines-test = "1.8.0"
+arch-core-testing = "2.2.0"
+
 [libraries]
+
+# JUnit 5 (BOM - Bill of Materials)
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom" }
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine" }
+junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+# Опционально: поддержка старых тестов JUnit 4 внутри JUnit 5
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine" }
+
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch-core-testing" }
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
+
+
+
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil"}
 
